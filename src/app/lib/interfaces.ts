@@ -52,7 +52,7 @@ interface FlagObject {
     required: number;
     isV5: boolean;
     v5Objectives: Array<TObjective[]>;
-    v5Required: v5Requirement[]; 
+    v5Required: v5Requirement[];
 }
 
 interface v5Requirement {
@@ -125,5 +125,16 @@ interface PresetGroup {
     groupTitle: string;
     flags: Preset[];
 }
+interface SeedMetadata {
+    version: string,
+    flags: string,
+    seed: string,
+    objectives: string[]
+}
 
-export type { KeyItems, Boss, TObjective, FlagObject, Quest, Location, Character, KIObjectives, Kit, FlagBadge, TimerState, V5FlagObject, v5Requirement, v5QuestReward, Preset, PresetGroup };
+interface MemoryAddress {
+    size: number,
+    address: number
+}
+
+export type { KeyItems, Boss, TObjective, FlagObject, Quest, Location, Character, KIObjectives, Kit, FlagBadge, TimerState, V5FlagObject, v5Requirement, v5QuestReward, Preset, PresetGroup, SeedMetadata, MemoryAddress };

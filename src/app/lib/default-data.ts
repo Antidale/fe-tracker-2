@@ -1,4 +1,5 @@
-import { KeyItems, Boss, Quest, Location, Character, KIObjectives, v5QuestReward } from "./interfaces";
+
+import { KeyItems, Boss, Quest, Location, Character, KIObjectives, v5QuestReward, MemoryAddress } from "./interfaces";
 
 const defaultKI: KeyItems = {
     crystal: false,
@@ -249,7 +250,7 @@ const bosses: Boss[] = [{
 {
     slug: 'elements',
     title: 'Elements',
-    id: 24, 
+    id: 24,
     iconFile: 'FFIVFE-Bosses-24Fiends-Color.png',
     iconGray: 'FFIVFE-Bosses-24Fiends-Gray.png',
     toggle: false
@@ -924,7 +925,7 @@ const locations: Location[] = [
         available: false,
         cleared: false,
     },
-    
+
 ];
 
 const characters: Character[] = [
@@ -1211,7 +1212,7 @@ const questRewards: v5QuestReward[] = [
         slug: "godhand",
         display: "Recieve a Godhand"
     },
-{
+    {
         slug: "thor",
         display: "Recieve a Thor Hammer"
     },
@@ -1419,10 +1420,17 @@ const questRewards: v5QuestReward[] = [
         slug: "item_t8",
         display: "Recieve a Tier 8 item"
     },
-    
+
 
 ];
 
+const memoryAddresses: Record<string, MemoryAddress> = {
+    //TODO: double check these addresses
+    "metadata": { size: 4, address: 0x1FF000 },
+    "jsonDoc": { size: 0, address: 0x1FF004 },
+    "foundKI": { size: 3, address: 0xF51500 },
+    "usedKI": { size: 3, address: 0xF51503 },
+    "completedObjectives": { size: 3, address: 0xF51503 },
+}
 
-
-export { defaultKI, bosses, quests, locations, characters, questsByKI, questRewards };
+export { defaultKI, bosses, quests, locations, characters, questsByKI, questRewards, memoryAddresses };
