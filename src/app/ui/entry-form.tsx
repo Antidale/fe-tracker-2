@@ -6,20 +6,21 @@ import { useState } from "react";
 
 export default function Form() {
 
+<<<<<<< HEAD
   const [flags, setFlags] = useState("")
 
-  
+
   return (
     <>
       <form action={entrySubmit} className="w-full">
         <div className="flex flex-col m-5 w-full items-center">
           <label htmlFor="flags">Flags</label>
-          <textarea 
+          <textarea
             id="flags"
             name="flags"
             value={flags}
             onChange={(e => setFlags(e.target.value))}
-            rows={6} 
+            rows={6}
             className="min-w-96 w-3/4 text-slate-950"
           ></textarea>
         </div>
@@ -31,6 +32,16 @@ export default function Form() {
             className="text-slate-950"
           ></input>
         </div>
+        <div className="flex flex-col m-5 w-full items-center">
+          <label>Autotracking Port</label>
+          <input
+            id="port"
+            name="port"
+            className="text-slate-950"
+            type="number"
+            placeholder="leave blank to not autotrack"
+          ></input>
+        </div>
         <div className="flex justify-center m-5 w-full">
           <button type="submit" className="bg-slate-700 p-3 rounded hover:bg-slate-600">Go!</button>
         </div>
@@ -39,11 +50,11 @@ export default function Form() {
         <h2 className="text-center text-2xl text-bold m-5">Presets</h2>
         {presets.map(group => {
           return (
-            <div className="flex"  key={`preset-group-${group.groupTitle}`}>
+            <div className="flex" key={`preset-group-${group.groupTitle}`}>
               <div className="bg-blue-800 w-32 p-3">
                 <p className="font-bold">{group.groupTitle}</p>
               </div>
-              
+
               {group.flags.map((preset, index) => {
                 return (
                   <button
@@ -61,6 +72,43 @@ export default function Form() {
         <p className="m-5 text-center">Warning: Megaflare Rally has objective groups D and E removed in order to fit on the display.</p>
       </div>
     </>
+=======
+
+  return (
+    <form action={entrySubmit} className="w-full">
+      <div className="flex flex-col m-5 w-full items-center">
+        <label htmlFor="flags">Flags</label>
+        <textarea
+          id="flags"
+          name="flags"
+          rows={6}
+          className="min-w-96 w-3/4 text-slate-950"
+        ></textarea>
+      </div>
+      <div className="flex flex-col m-5 w-full items-center">
+        <label>Background Color</label>
+        <input
+          id="bg-color"
+          name="bg-color"
+          className="text-slate-950"
+        ></input>
+      </div>
+      <div className="flex flex-col m-5 w-full items-center">
+        <label>Autotracking Port</label>
+        <input
+          id="port"
+          name="port"
+          className="text-slate-950"
+          type="number"
+          placeholder="leave blank to not autotrack"
+        ></input>
+      </div>
+      <div className="flex justify-center m-5 w-full">
+        <button type="submit" className="bg-slate-700 p-3 rounded hover:bg-slate-600">Go!</button>
+      </div>
+
+    </form>
+>>>>>>> 755b6a4 (a start at SNI for fleury tracker 2.0)
   )
 }
 
