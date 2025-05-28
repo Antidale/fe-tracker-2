@@ -10,8 +10,9 @@ export async function entrySubmit(formData: FormData) {
   const flags = flagsRaw?.toString().replace(/[\n\r]+/g, '')
   const bgColor = formData.get("bg-color");
   const scrubbed = bgColor?.toString().replace("#", "%23")
+  const portInfo = formData.get("port");
 
   revalidatePath('/tracker');
-  redirect(`/tracker?flags=${flags}&bgColor=${scrubbed}`);
+  redirect(`/tracker?flags=${flags}&bgColor=${scrubbed}&port=${portInfo}`);
 
 }
