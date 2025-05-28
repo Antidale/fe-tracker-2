@@ -1,7 +1,7 @@
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { DevicesClient } from "../sni/sni.client";
 
-export async function connectSni(portStr: string) {
+export async function connectSni(portStr: string, attempts = 0) {
     const portInt = parseInt(portStr);
     if (isNaN(portInt)) {
         console.error(`sni port ${portStr} turned to NaN`)
@@ -14,6 +14,10 @@ export async function connectSni(portStr: string) {
         const listedDevices = await devicesClient.listDevices({ kinds: [] });
         return listedDevices.response.devices.length;
     } catch {
+        if (attempts < 5) {
+            return await connectSni(portStr, attempts)
+        }
+
         console.error("exploded getting devices")
         return 0;
     }
