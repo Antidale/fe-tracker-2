@@ -20,8 +20,8 @@ import { beginObjectiveEdit, beginv5ObjectiveEdit, editObjective, editV5Objectiv
 import TimeControlsDisplay from "@/app/ui/timer/timer-controls-display";
 import { getPropertySection } from "../lib/parse-flag-section";
 import "../sni/sni.client";
-import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
-import { DevicesClient } from "../sni/sni.client";
+import { connectSni } from "../lib/connect-sni";
+
 
 export default function Page() {
 
@@ -30,29 +30,9 @@ export default function Page() {
 
     const flags = params.get("flags");
     const bgColor = params.get("bgColor");
+
     const sniPort = params.get("port") ?? '';
-
-    const getDeviceCount = async () => {
-
-        const portInt = parseInt(sniPort);
-        if (isNaN(portInt)) {
-            console.error(`sni port ${sniPort} turned to NaN`)
-            return 0
-        }
-
-        try {
-            const channel = new GrpcWebFetchTransport(({ baseUrl: `http://localhost:${portInt}` }));
-            const devicesClient = new DevicesClient(channel);
-            const listedDevices = await devicesClient.listDevices({ kinds: [] });
-            return listedDevices.response.devices.length;
-        } catch {
-            console.error("exploded getting devices")
-            return 0;
-        }
-
-    };
-    const connectedDevicesCount = getDeviceCount();
-
+    const connectedDevicesCount = connectSni(sniPort);
 
     const color: string = bgColor !== null ? bgColor : "black";
     const assuredFlags: string = flags ? flags : "";
