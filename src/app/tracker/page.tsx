@@ -32,7 +32,11 @@ export default function Page() {
     const bgColor = params.get("bgColor");
 
     const sniPort = params.get("port") ?? '';
-    const connectedDevicesCount = connectSni(sniPort);
+
+    //TODO: fix this, which involves some sort of useState call, I'm sure
+    const connectedDevice = await connectSni(sniPort);
+
+    //TODO: if sniPort is not null/empty and connectedDevice is null, add a `Connect` Button somewhere
 
     const color: string = bgColor !== null ? bgColor : "black";
     const assuredFlags: string = flags ? flags : "";
@@ -122,7 +126,7 @@ export default function Page() {
                     <TimerDisplay
                         currentTime={timer.currentTime}
                     />
-                    <p>connected Count: {connectedDevicesCount}</p>
+                    <p>connected to: {connectedDevice?.uri ?? "Disconnected"}</p>
                 </div>
             </div>
             <div className="flex flex-col justify-between w-1/2">
