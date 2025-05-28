@@ -1,8 +1,7 @@
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { DevicesClient } from "../sni/sni.client";
-import { list } from "postcss";
 
-export async function connectSni(portStr: string, host: "localhost", attempts = 0) {
+export async function connectSni(portStr: string, host = "localhost", attempts = 0) {
     const portInt = parseInt(portStr);
     if (isNaN(portInt)) {
         console.error(`sni port ${portStr} turned to NaN`)
