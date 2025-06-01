@@ -1311,13 +1311,21 @@ const questRewards: v5QuestReward[] = [
 
 ];
 
-const memoryAddresses: Record<string, MemoryAddress> = {
-    //TODO: double check these addresses
-    "metadata": { size: 4, address: 0x1FF000 },
-    "jsonDoc": { size: 0, address: 0x1FF004 },
-    "foundKI": { size: 3, address: 0xF51500 },
-    "usedKI": { size: 3, address: 0xF51503 },
-    "completedObjectives": { size: 3, address: 0xF51503 },
+enum MemoryAddressName {
+    MetadataLength = "metadataLength",
+    MetadataDocument = "metadataDocument",
+    FoundKeyItems = "foundKeyItems",
+    UsedKeyItems = "usedKeyItems",
+    CompletedObjectives = "completedObjectives"
 }
 
-export { defaultKI, bosses, quests, locations, characters, questsByKI, questRewards, memoryAddresses };
+const memoryAddresses: Record<MemoryAddressName, MemoryAddress> = {
+    //TODO: double check these addresses
+    metadataLength: { size: 4, address: 0x1FF000 },
+    metadataDocument: { size: 0, address: 0x1FF004 },
+    foundKeyItems: { size: 3, address: 0xF51500 },
+    usedKeyItems: { size: 3, address: 0xF51503 },
+    completedObjectives: { size: 3, address: 0xF51503 },
+}
+
+export { defaultKI, bosses, quests, locations, characters, questsByKI, questRewards, memoryAddresses, MemoryAddressName };
