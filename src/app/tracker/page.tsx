@@ -20,8 +20,9 @@ import { beginObjectiveEdit, beginv5ObjectiveEdit, editObjective, editV5Objectiv
 import TimeControlsDisplay from "@/app/ui/timer/timer-controls-display";
 import { getPropertySection } from "../lib/parse-flag-section";
 import "../sni/sni.client";
-import { connectSni } from "../lib/connect-sni";
-
+import { connectSni } from "../lib/sni/connect-sni";
+import { readMetadata } from "../lib/sni/read-metadata";
+import { DevicesResponse_Device } from "../sni/sni";
 
 export default function Page() {
 
@@ -32,11 +33,7 @@ export default function Page() {
     const bgColor = params.get("bgColor");
 
     const sniPort = params.get("port") ?? '';
-
-    //TODO: fix this, which involves some sort of useState call, I'm sure
-    const connectedDevice = await connectSni(sniPort);
-
-    //TODO: if sniPort is not null/empty and connectedDevice is null, add a `Connect` Button somewhere
+    const sniHost = params.get("host") ?? 'localhost'
 
     const color: string = bgColor !== null ? bgColor : "black";
     const assuredFlags: string = flags ? flags : "";
@@ -64,6 +61,25 @@ export default function Page() {
         pauseTime: 0,
         isActive: false,
     });
+
+    const [connectedDevice, setConnectedDevice] = useState<DevicesResponse_Device>()
+
+    useEffect(() => {
+        async function getConnectedDevice() {
+            const device = await connectSni(sniPort, sniHost)
+            setConnectedDevice(device);
+        }
+        getConnectedDevice();
+    }, [sniPort, sniHost]);
+
+    const [metadata, setMetadata] = useState("");
+    useEffect(() => {
+        async function getMetadata() {
+            const metaData = await readMetadata(connectedDevice?.uri, connectedDevice?.defaultAddressSpace, sniPort, sniHost);
+            setMetadata(metaData ?? "")
+        }
+        getMetadata();
+    }, [connectedDevice, sniPort, sniHost])
 
     let objectiveCount = 0;
     v5objectives.forEach(objSet => objectiveCount += objSet.length);
@@ -122,11 +138,13 @@ export default function Page() {
                         isMiab={isMiab}
                     /> : null}
                 </div>
-                <div className="h-1/4">
+                <div className="h-1/5">
+                    <p>
+                        {metadata.length}
+                    </p>
                     <TimerDisplay
                         currentTime={timer.currentTime}
                     />
-                    <p>connected to: {connectedDevice?.uri ?? "Disconnected"}</p>
                 </div>
             </div>
             <div className="flex flex-col justify-between w-1/2">
