@@ -62,7 +62,7 @@ export default function Page() {
         isActive: false,
     });
 
-    const [connectedDevice, setConnectedDevice] = useState<DevicesResponse_Device>()
+    const [connectedDevice, setConnectedDevice] = useState<DevicesResponse_Device>();
 
     useEffect(() => {
         async function getConnectedDevice() {
@@ -79,9 +79,10 @@ export default function Page() {
             setMetadata(metaData ?? "")
         }
         getMetadata();
-    }, [connectedDevice, sniPort, sniHost])
+    }, [connectedDevice, sniPort, sniHost]);
 
-    console.log(metadata)
+    //TODO: figure out why this is firing many times on page load/refresh. Probably should hide all my code and see if a log statement is hit a bunch even then.
+    console.log(metadata);
 
     let objectiveCount = 0;
     v5objectives.forEach(objSet => objectiveCount += objSet.length);

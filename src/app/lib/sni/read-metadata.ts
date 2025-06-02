@@ -4,12 +4,15 @@ import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { memoryAddresses, MemoryAddressName } from "../default-data";
 import { performSingleRead } from "./read-single-memory";
 
+
+//todo: move to somewhere else
 const getTransport = (port: string, host: string) => {
     return new GrpcWebFetchTransport({
         baseUrl: `http://${host}:${port}`,
     })
 }
 
+//todo: if we need this anywhere else, also move to another file/utils section
 function convert(input: Uint8Array<ArrayBufferLike>) {
     const length = input.length;
     const buff = Buffer.from(input);
@@ -41,7 +44,7 @@ export async function readMetadata(uri: string | undefined, addressSpace: Addres
 
     const documentResponse = await performSingleRead(memoryClient, uri, addressSpace, memoryAddresses[MemoryAddressName.MetadataDocument], docLength);
 
-    const metadataDocumentString = new TextDecoder("utf-8").decode(documentResponse.response.response?.data)
+    const metadataDocumentString = new TextDecoder("utf-8").decode(documentResponse.response.response?.data);
 
-    return JSON.parse(metadataDocumentString)
+    return JSON.parse(metadataDocumentString);
 }
