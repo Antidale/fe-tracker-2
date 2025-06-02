@@ -19,10 +19,10 @@ import { beginTimer, endTimer, resetTimer } from "../lib/controls/time-controls"
 import { beginObjectiveEdit, beginv5ObjectiveEdit, editObjective, editV5Objective, completeObjective, completeV5Objective } from "../lib/controls/objective-controle";
 import TimeControlsDisplay from "@/app/ui/timer/timer-controls-display";
 import { getPropertySection } from "../lib/parse-flag-section";
-import "../sni/sni.client";
+import "../lib/sni/sni-generated/sni.client";
 import { connectSni } from "../lib/sni/connect-sni";
 import { readMetadata } from "../lib/sni/read-metadata";
-import { DevicesResponse_Device } from "../sni/sni";
+import { DevicesResponse_Device } from "../lib/sni/sni-generated/sni";
 
 export default function Page() {
 
