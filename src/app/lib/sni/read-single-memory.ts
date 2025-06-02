@@ -1,6 +1,6 @@
-import { AddressSpace, MemoryMapping } from "@/app/sni/sni"
-import { DeviceMemoryClient } from "@/app/sni/sni.client"
-import { MemoryAddress } from "../interfaces"
+import { AddressSpace, MemoryMapping } from "@/app/lib/sni/sni-generated/sni"
+import { DeviceMemoryClient } from "@/app/lib/sni/sni-generated/sni.client"
+import { MemoryAddress } from "./sni-interfaces"
 
 export async function performSingleRead(client: DeviceMemoryClient, uri: string, addressSpace: AddressSpace, memoryAddress: MemoryAddress, overrideLength?: number) {
     const readResult = await client.singleRead({

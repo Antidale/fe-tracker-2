@@ -1,5 +1,7 @@
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
-import { DevicesClient } from "../../sni/sni.client";
+import { DevicesClient } from "./sni-generated/sni.client";
+
+
 
 export async function connectSni(portStr: string, host = "localhost", attempts = 0) {
     const portInt = parseInt(portStr);
@@ -17,7 +19,9 @@ export async function connectSni(portStr: string, host = "localhost", attempts =
     try {
         const channel = new GrpcWebFetchTransport(({ baseUrl: `http://${host}:${portInt}` }));
         const devicesClient = new DevicesClient(channel);
+
         const listedDevices = await devicesClient.listDevices({ kinds: [] });
+
         switch (listedDevices.response.devices.length) {
             case 0: {
                 return await connectSni(portStr, host, attempts)
