@@ -1,9 +1,8 @@
-import { AddressSpace } from "@/app/sni/sni";
-import { DeviceMemoryClient } from "@/app/sni/sni.client";
+import { AddressSpace } from "@/app/lib/sni/sni-generated/sni";
+import { DeviceMemoryClient } from "@/app/lib/sni/sni-generated/sni.client";
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
-import { memoryAddresses, MemoryAddressName } from "../default-data";
+import { memoryAddresses, MemoryAddressName } from "./sni-data";
 import { performSingleRead } from "./read-single-memory";
-
 
 //todo: move to somewhere else
 const getTransport = (port: string, host: string) => {
@@ -20,6 +19,8 @@ function convert(input: Uint8Array<ArrayBufferLike>) {
     return result;
 }
 
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
 export async function readMetadata(uri: string | undefined, addressSpace: AddressSpace | undefined, port: string, host: string) {
     if (!uri) { return {} }
 
@@ -29,6 +30,8 @@ export async function readMetadata(uri: string | undefined, addressSpace: Addres
 
     const transport = getTransport(port, host);
     const memoryClient = new DeviceMemoryClient(transport);
+    //I think this fixes the issues with a brand new connection and getting an error. 
+    await delay(10);
     const docLengthResponse = await performSingleRead(
         memoryClient,
         uri,

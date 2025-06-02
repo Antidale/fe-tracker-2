@@ -123,9 +123,4 @@ interface SeedMetadata {
     objectives: string[]
 }
 
-interface MemoryAddress {
-    size: number,
-    address: number
-}
-
-export type { KeyItems, Boss, TObjective, FlagObject, Quest, Location, Character, KIObjectives, Kit, FlagBadge, TimerState, V5FlagObject, v5Requirement, v5QuestReward, SeedMetadata, MemoryAddress };
+export type { KeyItems, Boss, TObjective, FlagObject, Quest, Location, Character, KIObjectives, Kit, FlagBadge, TimerState, V5FlagObject, v5Requirement, v5QuestReward, SeedMetadata };
