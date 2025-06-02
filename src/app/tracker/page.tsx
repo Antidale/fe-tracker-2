@@ -81,6 +81,8 @@ export default function Page() {
         getMetadata();
     }, [connectedDevice, sniPort, sniHost])
 
+    console.log(metadata)
+
     let objectiveCount = 0;
     v5objectives.forEach(objSet => objectiveCount += objSet.length);
     const isV5: boolean = assuredFlags.indexOf("OA") >= 0;
@@ -139,9 +141,6 @@ export default function Page() {
                     /> : null}
                 </div>
                 <div className="h-1/5">
-                    <p>
-                        {metadata.length}
-                    </p>
                     <TimerDisplay
                         currentTime={timer.currentTime}
                     />
