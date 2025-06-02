@@ -88,6 +88,8 @@ export default function Page() {
         getMetadata();
     }, [connectedDevice, sniPort, sniHost])
 
+    console.log(metadata)
+
     let objectiveCount = 0;
     v5objectives.forEach(objSet => objectiveCount += objSet.length);
     const isV5: boolean = assuredFlags.indexOf("OA") >= 0;
