@@ -1,28 +1,13 @@
-import { AddressSpace, MemoryMapping } from "@/app/sni/sni";
+import { AddressSpace } from "@/app/sni/sni";
 import { DeviceMemoryClient } from "@/app/sni/sni.client";
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
-
 import { memoryAddresses, MemoryAddressName } from "../default-data";
-import { MemoryAddress } from "../interfaces";
+import { performSingleRead } from "./read-single-memory";
 
 const getTransport = (port: string, host: string) => {
     return new GrpcWebFetchTransport({
         baseUrl: `http://${host}:${port}`,
     })
-}
-
-async function performSingleRead(client: DeviceMemoryClient, uri: string, addressSpace: AddressSpace, memoryAddress: MemoryAddress, overrideLength?: number) {
-    const readResult = await client.singleRead({
-        uri: uri,
-        request: {
-            requestMemoryMapping: MemoryMapping.Unknown,
-            size: overrideLength ?? memoryAddress.size,
-            requestAddressSpace: addressSpace,
-            requestAddress: memoryAddress.address
-        }
-    })
-
-    return readResult
 }
 
 function convert(input: Uint8Array<ArrayBufferLike>) {
