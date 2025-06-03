@@ -32,7 +32,7 @@ export default function Page() {
     const flags = params.get("flags");
     const bgColor = params.get("bgColor");
 
-    const sniPort = params.get("port") ?? '';
+    const sniPort = Number.parseInt(params.get("port") || "");
     const sniHost = params.get("host") ?? 'localhost'
 
     const color: string = bgColor !== null ? bgColor : "black";
@@ -66,8 +66,10 @@ export default function Page() {
 
     useEffect(() => {
         async function getConnectedDevice() {
-            const device = await connectSni(sniPort, sniHost)
-            setConnectedDevice(device);
+            if (!isNaN(sniPort)) {
+                const device = await connectSni(sniHost, sniPort)
+                setConnectedDevice(device);
+            }
         }
         getConnectedDevice();
     }, [sniPort, sniHost]);
@@ -75,7 +77,7 @@ export default function Page() {
     const [metadata, setMetadata] = useState("");
     useEffect(() => {
         async function getMetadata() {
-            const metaData = await readMetadata(connectedDevice?.uri, connectedDevice?.defaultAddressSpace, sniPort, sniHost);
+            const metaData = await readMetadata(connectedDevice, sniHost, sniPort);
             setMetadata(metaData ?? "")
         }
         getMetadata();
