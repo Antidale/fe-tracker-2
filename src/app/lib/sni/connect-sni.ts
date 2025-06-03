@@ -1,15 +1,6 @@
-import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
-import { DevicesClient } from "./sni-generated/sni.client";
+import { getDeviceClient } from "./get-client";
 
-
-
-export async function connectSni(portStr: string, host = "localhost", attempts = 0) {
-    const portInt = parseInt(portStr);
-    if (isNaN(portInt)) {
-        console.error(`invalid port given: ${portStr}`)
-        return Promise.reject(new Error(`sni port ${portStr} turned to NaN`));
-    }
-
+export async function connectSni(host: string, port: number, attempts = 0) {
     if (attempts === 5)
         return Promise.reject(new Error("exceeded retry attempts"));
 
@@ -17,14 +8,13 @@ export async function connectSni(portStr: string, host = "localhost", attempts =
 
     //TODO: figure out errors on very first connection to supernt (and maybe emulators, haven't tried them yet).
     try {
-        const channel = new GrpcWebFetchTransport(({ baseUrl: `http://${host}:${portInt}` }));
-        const devicesClient = new DevicesClient(channel);
+        const client = getDeviceClient(host, port);
 
-        const listedDevices = await devicesClient.listDevices({ kinds: [] });
+        const listedDevices = await client.listDevices({ kinds: [] });
 
         switch (listedDevices.response.devices.length) {
             case 0: {
-                return await connectSni(portStr, host, attempts)
+                return await connectSni(host, port, attempts)
             }
 
             //Just give them the first one back, if need be later on we can add something to let them select a device
@@ -33,6 +23,6 @@ export async function connectSni(portStr: string, host = "localhost", attempts =
 
     } catch {
 
-        return await connectSni(portStr, host, attempts)
+        return await connectSni(host, port, attempts)
     }
 }
