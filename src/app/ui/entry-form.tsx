@@ -58,7 +58,7 @@ export default function Form() {
             </div>
           );
         })}
-        <p className="m-5 text-center">Warning: 50cc has objective groups D and E removed in order to fit on the display.</p>
+        <p className="m-5 text-center">Warning: Megaflare Rally has objective groups D and E removed in order to fit on the display.</p>
       </div>
     </>
   )
