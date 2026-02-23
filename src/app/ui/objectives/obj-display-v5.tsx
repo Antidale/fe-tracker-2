@@ -8,10 +8,11 @@ export default function v5ObjectiveDisplay({ objectives, req, onEdit, onComplete
     // const goMode = complete.length >= req;
     const groups = ["A", "B", "C", "D", "E"];
 
-    function displayReqs(req:v5Requirement) {
+    function displayReqs(req:v5Requirement, numCompleted: number, total: number) {
         const result = [];
         for (const [key, val] of Object.entries(req)) {
-            result.push(<p className="m-1" key={key + val}>{key}:{val}</p>)
+            const keyInt = key === 'all' ? total : parseInt(key);
+            result.push(<p className={`m-1 ${numCompleted >= keyInt ? "text-yellow-200" : ""}`} key={key + val}>{key}:{val}</p>)
         }
         return result;
     }
@@ -27,10 +28,10 @@ export default function v5ObjectiveDisplay({ objectives, req, onEdit, onComplete
                 const complete = obj.filter(obj => !!obj.time && obj.time > 0);
                 return (
                     <div key={`obj-group-${groups[index]}`}>
-                        <div className="flex justify-between">
+                        <div className={`flex justify-between ${Object.keys(req[index]).length > 3 ? 'flex-col' : ''}`}>
                             <p className="font-bold text-yellow-300">Group {groups[index]}</p>
                             <div className="flex font-bold text-xs font-[family-name:var(--font-geist-mono)]">
-                                {displayReqs(req[index])}
+                                {displayReqs(req[index], complete.length, complete.length + active.length)}
                             </div>
                         </div>
                         
