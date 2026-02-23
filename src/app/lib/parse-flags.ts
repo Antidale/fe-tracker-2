@@ -44,7 +44,6 @@ const parseFlags = (flagString: string):FlagObject => {
 
                 // check set objectives (non-custom)
             const dkIndices = getIndices('collect_dkmatter', setString);
-            console.log('dk indices', dkIndices, setString)
                
             if (dkIndices.length ) {
                 dkIndices.forEach(dkMatter => {

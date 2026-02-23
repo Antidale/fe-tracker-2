@@ -915,6 +915,15 @@ const locations: Location[] = [
         available: true,
         cleared: false,
     },
+    {
+        id: 48,
+        title: "Kokkol Forge",
+        type: 'forge',
+        zone: 1,
+        dependencies: ['adamant', 'legend'],
+        available: false,
+        cleared: false,
+    },
     
 ];
 
