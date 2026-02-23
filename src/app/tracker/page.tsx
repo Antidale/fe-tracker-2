@@ -39,6 +39,7 @@ export default function Page() {
     const Kflags = getPropertySection(assuredFlags, 'K');
     const isMiab = Kflags.indexOf('miab') >= 0;
     const isChar = Kflags.indexOf('char') >= 0;
+    const Kforge = Kflags.indexOf('forge') >= 0;
 
     const Cflags = getPropertySection(assuredFlags, 'C');
     const noGiant = Cflags.indexOf('nogiant') >= 0;
@@ -120,6 +121,7 @@ export default function Page() {
                             noGiant={noGiant}
                             Cnofree={Cnofree}
                             Cwishes={Cwishes}
+                            Kforge={Kforge}
                         /> : null}
                     </div>
                 </div>
