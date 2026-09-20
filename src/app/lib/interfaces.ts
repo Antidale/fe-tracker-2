@@ -125,11 +125,5 @@ interface PresetGroup {
     groupTitle: string;
     flags: Preset[];
 }
-interface SeedMetadata {
-    version: string,
-    flags: string,
-    seed: string,
-    objectives: string[]
-}
 
-export type { KeyItems, Boss, TObjective, FlagObject, Quest, Location, Character, KIObjectives, Kit, FlagBadge, TimerState, V5FlagObject, v5Requirement, v5QuestReward, Preset, PresetGroup, SeedMetadata };
+export type { KeyItems, Boss, TObjective, FlagObject, Quest, Location, Character, KIObjectives, Kit, FlagBadge, TimerState, V5FlagObject, v5Requirement, v5QuestReward, Preset, PresetGroup };
