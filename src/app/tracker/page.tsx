@@ -23,6 +23,7 @@ import "../lib/sni/sni-generated/sni.client";
 import { connectSni } from "../lib/sni/connect-sni";
 import { readMetadata } from "../lib/sni/read-metadata";
 import { DevicesResponse_Device } from "../lib/sni/sni-generated/sni";
+import { fetchFields } from "../lib/sni/fetch-fields";
 
 export default function Page() {
 
@@ -81,6 +82,15 @@ export default function Page() {
         getConnectedDevice();
     }, [sniPort, sniHost]);
 
+    const [fileName, setFileName] = useState("");
+    useEffect(() => {
+        async function getFileName() {
+            const fileName = await fetchFields(connectedDevice, sniHost, sniPort);
+            setFileName(fileName)
+        }
+        getFileName();
+    }, [connectedDevice, sniPort, sniHost])
+
     const [metadata, setMetadata] = useState("");
     useEffect(() => {
         async function getMetadata() {
@@ -90,7 +100,8 @@ export default function Page() {
         getMetadata();
     }, [connectedDevice, sniPort, sniHost]);
 
-    //TODO: figure out why this is firing many times on page load/refresh. Probably should hide all my code and see if a log statement is hit a bunch even then.
+    //Leaving this in since I'm not displaying the info anywhere else in this PoC
+    console.log(fileName);
     console.log(metadata);
 
     let objectiveCount = 0;

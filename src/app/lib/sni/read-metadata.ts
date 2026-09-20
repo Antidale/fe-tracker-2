@@ -19,25 +19,30 @@ export async function readMetadata(device: DevicesResponse_Device | undefined, h
     const addressSpace = device.defaultAddressSpace
     const memoryClient = getMemoryClient(host, port)
 
-    //I think this fixes the issues with a brand new connection and getting an error. 
-    //it did not :(
-    await delay(10);
-    const docLengthResponse = await performSingleRead(
-        memoryClient,
-        device.uri,
-        addressSpace,
-        memoryAddresses[MemoryAddressName.MetadataLength]
-    );
+    for (let attempt = 0; attempt < 10; attempt++) {
+        try {
+            const docLengthResponse = await performSingleRead(
+                memoryClient,
+                device.uri,
+                addressSpace,
+                memoryAddresses[MemoryAddressName.MetadataLength]
+            );
 
-    if (!docLengthResponse.response.response) {
-        return {}
+            if (!docLengthResponse.response.response) {
+                return {}
+            }
+
+            const docLength = convert(docLengthResponse.response.response.data);
+
+            const documentResponse = await performSingleRead(memoryClient, device.uri, addressSpace, memoryAddresses[MemoryAddressName.MetadataDocument], docLength);
+
+            const metadataDocumentString = new TextDecoder("utf-8").decode(documentResponse.response.response?.data);
+
+            return JSON.parse(metadataDocumentString);
+        }
+        catch {
+            //the FXPAK can take a bit to actually be available to read from on first connection
+            await delay(30);
+        }
     }
-
-    const docLength = convert(docLengthResponse.response.response.data);
-
-    const documentResponse = await performSingleRead(memoryClient, device.uri, addressSpace, memoryAddresses[MemoryAddressName.MetadataDocument], docLength);
-
-    const metadataDocumentString = new TextDecoder("utf-8").decode(documentResponse.response.response?.data);
-
-    return JSON.parse(metadataDocumentString);
 }
