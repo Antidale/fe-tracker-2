@@ -4,7 +4,7 @@ import { getDeiceInfoClient } from "./get-client";
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 export async function fetchFields(device: DevicesResponse_Device | undefined, host: string, port: number): Promise<string> {
-    if (!device) { return "" }
+    if (!device || isNaN(port)) { return "" }
     const uri = device.uri;
     const infoClient = getDeiceInfoClient(host, port);
 

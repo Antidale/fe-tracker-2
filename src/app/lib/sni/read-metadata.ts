@@ -14,7 +14,7 @@ function convert(input: Uint8Array<ArrayBufferLike>) {
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 export async function readMetadata(device: DevicesResponse_Device | undefined, host: string, port: number) {
-    if (!device) { return {} }
+    if (!device || isNaN(port)) { return {} }
 
     const addressSpace = device.defaultAddressSpace
     const memoryClient = getMemoryClient(host, port)
