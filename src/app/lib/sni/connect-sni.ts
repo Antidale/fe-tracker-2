@@ -6,7 +6,6 @@ export async function connectSni(host: string, port: number, attempts = 0) {
 
     attempts += 1;
 
-    //TODO: figure out errors on very first connection to supernt (and maybe emulators, haven't tried them yet).
     try {
         const client = getDeviceClient(host, port);
 
@@ -16,13 +15,12 @@ export async function connectSni(host: string, port: number, attempts = 0) {
             case 0: {
                 return await connectSni(host, port, attempts)
             }
-
-            //Just give them the first one back, if need be later on we can add something to let them select a device
+            //TODO: Eventually can not default to the first connected device.
+            //I do not know if any FE players will actually have multiple to choose from
             default: return Promise.resolve(listedDevices.response.devices[0]);
         }
 
     } catch {
-
         return await connectSni(host, port, attempts)
     }
 }

@@ -10,6 +10,7 @@ export async function fetchFields(device: DevicesResponse_Device | undefined, ho
 
     try {
         //This is something that can be expanded on to pull more fields back. Right now for demonstrating the capability, I'm just pulling the file name.
+        //https://github.com/alttpo/sni/blob/77ba8ac44ec63fc1c5f41549b6da9851085790a2/protos/sni/sni.proto#L127 has the full list of fields. Many of them return empty for the FxPak
         for (let attempt = 0; attempt < 10; attempt++) {
             const request = FieldsRequest.create({
                 uri,

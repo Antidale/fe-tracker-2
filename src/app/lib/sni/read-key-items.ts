@@ -4,7 +4,7 @@ import { performSingleRead } from "./read-single-memory";
 import { getMemoryClient } from "./get-client";
 
 
-//TODO: these two functions are going to be pretty much entirely the same, excep for the MemoryAddress name, so at some point I should make this better
+//TODO: these two functions are going to be pretty much entirely the same, excep for the MemoryAddress name, so at some point I should make this better. Probably the caller should just pass in the desired memory adddress. Could also instead expose a single GetKeyItems call that returns something like { found: <the found ki>, used: <the used ki> } and make use of the multi memory read.
 async function readFoundKeyItems(device: DevicesResponse_Device | undefined, host: string, port: number) {
     if (!device) { return {} }
 
@@ -18,7 +18,7 @@ async function readFoundKeyItems(device: DevicesResponse_Device | undefined, hos
         memoryAddresses[MemoryAddressName.FoundKeyItems]
     );
 
-    //TODO: actually go through the returned data and provide something more useful to callers, they shouldn't have to translate
+    //TODO: actually go through the returned data and provide something more useful to callers, they shouldn't have to translate this byte array to Ki status
     return foundKeyItems.response.response?.data
 }
 
@@ -35,6 +35,7 @@ async function readUsedKeyItems(device: DevicesResponse_Device | undefined, host
         memoryAddresses[MemoryAddressName.UsedKeyItems]
     );
 
+    //TODO: actually go through the returned data and provide something more useful to callers, they shouldn't have to translate this byte array to Ki status
     return foundKeyItems.response.response?.data
 }
 
