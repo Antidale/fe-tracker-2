@@ -8,7 +8,7 @@ export async function performSingleRead(client: DeviceMemoryClient, uri: string,
         request: {
             requestMemoryMapping: MemoryMapping.Unknown,
             size: overrideLength ?? memoryAddress.size,
-            requestAddressSpace: addressSpace,
+            requestAddressSpace: AddressSpace.FxPakPro,
             requestAddress: memoryAddress.address
         }
     })
