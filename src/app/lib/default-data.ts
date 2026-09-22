@@ -799,7 +799,7 @@ const locations: Location[] = [
         id: 35,
         title: 'Lunar Path',
         type: 'miab',
-        zone: 2,
+        zone: 0,
         dependencies: ['darkness'],
         available: false,
         cleared: false,
